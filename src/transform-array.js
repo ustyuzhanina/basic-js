@@ -40,7 +40,7 @@ export default function transform(arr) {
                 }
                 break;
             case "--double-prev":
-                if (newArr[i - 1]) {
+                if (newArr[i - 1] && newArr[i - 2] !== "--discard-next") {
                     resArr.push(newArr[i - 1]);
                 }
 
