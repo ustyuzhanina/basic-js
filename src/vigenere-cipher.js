@@ -32,7 +32,7 @@ export default class VigenereCipheringMachine {
         ];
     }
     encrypt(message, key) {
-        // throw new NotImplementedError('Not implemented');
+        throw new NotImplementedError('Not implemented');
         // remove line with error and write your code here
         if (!(message && key)) {
             throw new Error(this.error);
@@ -41,7 +41,8 @@ export default class VigenereCipheringMachine {
         let kf = Math.ceil(message.length / key.length);
         key = key.repeat(kf);
 
-        const array = message.toUpperCase().split("").map(item => {
+        const preArr = message.toUpperCase().split("")
+        const array = preArr.map(item => {
             item.replace(/[A-Z]/, letter => {
                 let letterIdx = letter.charCodeAt(0) - this.alphabet[0];
                 let shift = key.charCodeAt(0) - this.alphabet[0];
@@ -54,7 +55,7 @@ export default class VigenereCipheringMachine {
     }
 
     decrypt(encryptedMessage, key) {
-        // throw new NotImplementedError('Not implemented');
+        throw new NotImplementedError('Not implemented');
         // remove line with error and write your code here
         if (!(message && key)) {
             throw new Error(this.error);
