@@ -32,33 +32,65 @@ export default class VigenereCipheringMachine {
         ];
     }
     encrypt(message, key) {
-        throw new NotImplementedError('Not implemented');
+        // throw new NotImplementedError('Not implemented');
         // remove line with error and write your code here
         if (!(message && key)) {
             throw new Error(this.error);
         }
 
         let kf = Math.ceil(message.length / key.length);
-        key = key.repeat(kf);
+        key = key.repeat(kf).toUpperCase();
 
-        const preArr = message.toUpperCase().split("")
+        const preArr = message.toUpperCase().split("");
+        let count = 0;
+
         const array = preArr.map(item => {
-            item.replace(/[A-Z]/, letter => {
-                let letterIdx = letter.charCodeAt(0) - this.alphabet[0];
-                let shift = key.charCodeAt(0) - this.alphabet[0];
-
-                return String.fromCharCode(this.alphabet[0] + (letterIdx + shift) % this.alphabet.length)
-            })
+            let resLetter;
+            if (/[A-Z]/.test(item)) {
+                item.replace(/[A-Z]/, (match) => {
+                    const letterIdx = match.charCodeAt(0) - this.alphabet[0];
+                    const shift = key.charCodeAt(count) - this.alphabet[0];
+                    count++;
+                    resLetter = String.fromCharCode(this.alphabet[0] + (letterIdx + shift) % this.alphabet.length);
+                })
+            } else {
+                resLetter = item;
+            }
+            return resLetter;
         });
 
         return this.type === "reverse" ? array.reverse().join("") : array.join("");
     }
 
     decrypt(encryptedMessage, key) {
-        throw new NotImplementedError('Not implemented');
+        // throw new NotImplementedError('Not implemented');
         // remove line with error and write your code here
-        if (!(message && key)) {
+        if (!(encryptedMessage && key)) {
             throw new Error(this.error);
         }
+
+        let kf = Math.ceil(encryptedMessage.length / key.length);
+        key = key.repeat(kf).toUpperCase();
+
+        const preArr = encryptedMessage.toUpperCase().split("");
+        let count = 0;
+
+        const array = preArr.map(item => {
+            let resLetter;
+            if (/[A-Z]/.test(item)) {
+                item.replace(/[A-Z]/, (match) => {
+                    const letterIdx = match.charCodeAt(0) - this.alphabet[0];
+                    const shift = key.charCodeAt(count) - this.alphabet[0];
+                    count++;
+                    resLetter = String.fromCharCode(this.alphabet[0] + (letterIdx - shift + this.alphabet.length) % this.alphabet.length);
+                })
+            } else {
+                resLetter = item;
+            }
+            return resLetter;
+        });
+
+        return this.type === "reverse" ? array.reverse().join("") : array.join("");
+
     }
 }
